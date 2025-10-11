@@ -20,7 +20,8 @@ export function Hero() {
           Find Your Balance Within
         </h1>
         <p className="text-lg sm:text-xl md:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto text-pretty">
-          Private, compassionate care for your emotional and mental wellbeing
+          Mental and Emotional wellbeing knowing that this is a safe haven -
+          your feelings are valid, you matter and you are ENOUGH!
         </p>
         <Button
           size="lg"

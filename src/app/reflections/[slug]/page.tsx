@@ -162,7 +162,7 @@ export default function ReflectionDetailPage() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="text-foreground/80 hover:text-foreground bg-transparent"
+                  className="text-foreground/80 bg-transparent hover:bg-primary hover:text-muted"
                 >
                   Let's Talk
                 </Button>
@@ -180,7 +180,7 @@ export default function ReflectionDetailPage() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleShare("facebook")}
-                    className="text-foreground/60 hover:text-foreground"
+                    className="text-foreground/60 hover:bg-primary hover:text-muted"
                   >
                     <Facebook className="h-4 w-4" />
                   </Button>
@@ -188,7 +188,7 @@ export default function ReflectionDetailPage() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleShare("twitter")}
-                    className="text-foreground/60 hover:text-foreground"
+                    className="text-foreground/60 hover:bg-primary hover:text-muted"
                   >
                     <Twitter className="h-4 w-4" />
                   </Button>
@@ -196,7 +196,7 @@ export default function ReflectionDetailPage() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleShare("email")}
-                    className="text-foreground/60 hover:text-foreground"
+                    className="text-foreground/60 hover:bg-primary hover:text-muted"
                   >
                     <Mail className="h-4 w-4" />
                   </Button>
@@ -204,7 +204,7 @@ export default function ReflectionDetailPage() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleShare("copy")}
-                    className="text-foreground/60 hover:text-foreground"
+                    className="text-foreground/60 hover:bg-primary hover:text-muted"
                   >
                     {copied ? "Copied!" : <Link2 className="h-4 w-4" />}
                   </Button>
@@ -219,7 +219,7 @@ export default function ReflectionDetailPage() {
                   <Button
                     variant="ghost"
                     onClick={() => setShowComments(true)}
-                    className="text-sm text-foreground/50 hover:text-foreground/70"
+                    className="text-sm text-foreground/50 hover:bg-primary hover:text-muted"
                   >
                     Leave a reflection
                   </Button>

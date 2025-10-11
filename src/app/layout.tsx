@@ -32,7 +32,7 @@ export default function RootLayout({
       <body
         className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}
       >
-        <NextTopLoader color="#A7C4A0" showSpinner={false} />
+        <NextTopLoader color="#709c71" showSpinner={false} />
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>

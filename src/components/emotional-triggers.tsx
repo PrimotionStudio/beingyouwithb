@@ -42,7 +42,8 @@ export function EmotionalTriggers() {
           <p className="text-lg text-foreground/80 leading-relaxed max-w-3xl mx-auto">
             If any of these resonate, you don't have to navigate them alone.
             These feelings are your mind's way of asking for support. I'm here
-            to listen without judgment and help you find your way back to peace.
+            to listen without judgment and help you find your way back to peace
+            and reclaim yourself.
           </p>
           <Button
             size="lg"
