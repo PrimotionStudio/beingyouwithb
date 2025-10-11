@@ -59,7 +59,7 @@ const groundingTechniques = [
 export function Resources() {
   return (
     <section id="resources" className="py-16 md:py-24 bg-secondary/30">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-foreground mb-4">
             Immediate Support & Resources

@@ -46,7 +46,7 @@ export function Contact() {
         />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mt-8">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-foreground mb-4">
             Let's Begin This Journey Together
@@ -74,7 +74,7 @@ export function Contact() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Your email address</Label>
+              <Label htmlFor="email">Your email address (optional)</Label>
               <Input
                 id="email"
                 type="email"
@@ -83,13 +83,12 @@ export function Contact() {
                   setFormData({ ...formData, email: e.target.value })
                 }
                 placeholder="email@example.com"
-                required
                 className="h-12"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone number (optional)</Label>
+              <Label htmlFor="phone">Phone number</Label>
               <Input
                 id="phone"
                 type="tel"
@@ -97,6 +96,7 @@ export function Contact() {
                 onChange={(e) =>
                   setFormData({ ...formData, phone: e.target.value })
                 }
+                required
                 placeholder="If you prefer a call back"
                 className="h-12"
               />
@@ -111,7 +111,6 @@ export function Contact() {
                   setFormData({ ...formData, message: e.target.value })
                 }
                 placeholder="Share as much or as little as you're comfortable with..."
-                rows={5}
                 className="resize-none"
               />
             </div>

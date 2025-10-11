@@ -91,7 +91,7 @@ export function Testimonials() {
             ))}
           </div>
 
-          <div className="flex items-center justify-center gap-4 mt-8">
+          <div className="flex items-center justify-center gap-4 mt-16 md:m-0">
             <Button
               variant="ghost"
               size="icon"

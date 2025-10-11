@@ -15,7 +15,7 @@ export function Welcome() {
           </div>
 
           {/* Content */}
-          <div className="order-1 md:order-2 space-y-6">
+          <div className="order-1 md:order-2 space-y-6 mt-8">
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-foreground leading-tight">
               A Space for Healing
             </h2>

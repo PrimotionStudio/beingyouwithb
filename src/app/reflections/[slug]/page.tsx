@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, Facebook, Twitter, Link2, Mail } from "lucide-react";
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 
 const reflectionsData: Record<string, any> = {
   "learning-to-let-go": {
@@ -18,7 +18,6 @@ const reflectionsData: Record<string, any> = {
     title: "On Learning to Let Go",
     content:
       "We spend so much energy trying to control outcomes, manage perceptions, and hold everything together. But sometimes, the most powerful thing we can do is release our grip. Letting go isn't giving up—it's making space for something new to emerge. It's trusting that not everything needs to be figured out right now.\n\nWhen we hold on too tightly, we create tension—in our bodies, our minds, our relationships. We become rigid, afraid of what might happen if we loosen our grasp. But life isn't meant to be controlled; it's meant to be experienced.\n\nLetting go is a practice, not a one-time event. It's choosing, again and again, to trust the process. To believe that you are capable of handling whatever comes next. To know that releasing control doesn't mean losing yourself—it means finding yourself.\n\nIt takes courage to let go. It takes trust. It takes faith in your own resilience. But on the other side of that release is freedom—the kind that allows you to breathe deeply, move freely, and live authentically.\n\nIf you're holding on to something that no longer serves you, know this: You have permission to let it go. You have permission to choose peace over perfection. You have permission to trust that you'll be okay.",
-    image: "/peaceful-hands-releasing-flower-petals-into-water.jpg",
     date: "March 15, 2025",
     readTime: "4 min read",
   },
@@ -56,7 +55,7 @@ export default function ReflectionDetailPage() {
   const [copied, setCopied] = useState(false);
 
   if (!reflection) {
-    return <div>Reflection not found</div>;
+    return notFound();
   }
 
   const handleSubmitComment = () => {
@@ -120,16 +119,18 @@ export default function ReflectionDetailPage() {
           </div>
 
           {/* Featured Image */}
-          <div className="max-w-5xl mx-auto mb-12 rounded-2xl overflow-hidden">
-            <div className="relative h-[400px] md:h-[500px]">
-              <Image
-                src={reflection.image || "/placeholder.svg"}
-                alt={reflection.title}
-                fill
-                className="object-cover"
-              />
+          {reflection?.image && (
+            <div className="max-w-5xl mx-auto mb-12 rounded-2xl overflow-hidden">
+              <div className="relative h-[400px] md:h-[500px]">
+                <Image
+                  src={reflection.image}
+                  alt={reflection.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Article Content */}
           <div className="max-w-3xl mx-auto">
