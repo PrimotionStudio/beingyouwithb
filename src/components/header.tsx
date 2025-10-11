@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -35,23 +36,23 @@ export function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a
-            href="#"
+          <Link
+            href="/"
             className="text-xl md:text-2xl font-serif font-light text-foreground"
           >
             BeingYouWithB
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
                 className="text-sm text-foreground/80 hover:text-foreground transition-colors"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -77,14 +78,14 @@ export function Header() {
         <div className="md:hidden bg-background border-t border-border">
           <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
                 className="text-lg text-foreground/80 hover:text-foreground transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>

@@ -5,9 +5,9 @@ export function Welcome() {
         <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
           {/* Photo */}
           <div className="order-2 md:order-1">
-            <div className="relative rounded-2xl overflow-hidden shadow-lg">
+            <div className="relative rounded-2xl overflow-hidden shadow-[inset_0_20px_20px_rgba(255,255,255,0.3)]">
               <img
-                src="/compassionate-therapist-professional-portrait-warm.jpg"
+                src="/beingyouwithb2.png"
                 alt="Professional portrait"
                 className="w-full h-auto"
               />

@@ -5,6 +5,7 @@ import { GeistMono } from "geist/font/mono";
 import { Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body
         className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}
       >
+        <NextTopLoader color="#A7C4A0" showSpinner={false} />
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>
