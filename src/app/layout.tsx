@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body
         className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}
       >
+        <Toaster swipeDirections={["bottom", "left", "right"]} />
         <NextTopLoader color="#709c71" showSpinner={false} />
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />

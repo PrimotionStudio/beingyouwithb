@@ -18,11 +18,11 @@ export function Header() {
   }, []);
 
   const navItems = [
-    { label: "About", href: "#welcome" },
-    { label: "Approach", href: "#approach" },
-    { label: "Reflections", href: "#reflections" },
-    { label: "Resources", href: "#resources" },
-    { label: "Contact", href: "#contact" },
+    { label: "About", href: "/#welcome" },
+    { label: "Approach", href: "/#approach" },
+    { label: "Reflections", href: "/#reflections" },
+    { label: "Resources", href: "/#resources" },
+    { label: "Contact", href: "/#contact" },
   ];
 
   return (

@@ -22,8 +22,8 @@ export function Contact() {
     email: "",
     phone: "",
     message: "",
-    contactMethod: "email",
-    bestTime: "",
+    contactMethod: "Either",
+    bestTime: "Weekends",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -128,9 +128,9 @@ export function Contact() {
                     <SelectValue placeholder="Select contact method" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="email">Email</SelectItem>
-                    <SelectItem value="phone">Phone</SelectItem>
-                    <SelectItem value="either">Either is fine</SelectItem>
+                    <SelectItem value="Email">Email</SelectItem>
+                    <SelectItem value="Phone">Phone</SelectItem>
+                    <SelectItem value="Either">Either is fine</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -147,10 +147,10 @@ export function Contact() {
                     <SelectValue placeholder="Select a time" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="morning">Morning</SelectItem>
-                    <SelectItem value="afternoon">Afternoon</SelectItem>
-                    <SelectItem value="evening">Evening</SelectItem>
-                    <SelectItem value="weekends">Weekends</SelectItem>
+                    <SelectItem value="Morning">Morning</SelectItem>
+                    <SelectItem value="Afternoon">Afternoon</SelectItem>
+                    <SelectItem value="Evening">Evening</SelectItem>
+                    <SelectItem value="Weekends">Weekends</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
