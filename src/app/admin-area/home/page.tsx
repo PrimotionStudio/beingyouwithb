@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FileText, MessageSquare, Mail, Plus, TrendingUp } from "lucide-react";
 import {
@@ -8,15 +10,29 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SummaryType } from "@/lib/zod";
+import Image from "next/image";
+// @ts-ignore
+import { ago } from "time-ago";
 
 export default function AdminDashboard() {
-  // Mock data - replace with real data from your database
-  const stats = {
-    totalPosts: 12,
-    totalComments: 48,
-    totalMessages: 23,
-    recentPosts: 3,
-  };
+  const [summary, setSummary] = useState<SummaryType>({
+    commentCounts: 0,
+    messageCounts: 0,
+    postCount: 0,
+    recentActivity: 0,
+    recentMessages: [],
+    recentPosts: [],
+  });
+
+  async function fetchSummary() {
+    const response = await fetch("/api/summary");
+    const data = await response.json();
+    setSummary(data);
+  }
+  useEffect(() => {
+    fetchSummary();
+  }, []);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
@@ -32,8 +48,8 @@ export default function AdminDashboard() {
 
       {/* Quick Actions */}
       <div className="flex flex-wrap gap-4 justify-center">
-        <Link href="/admin/posts/new">
-          <Button className="bg-sage-600 hover:bg-sage-700 text-white gap-2">
+        <Link href="/admin-area/home/posts/new">
+          <Button>
             <Plus className="w-4 h-4" />
             New Reflection
           </Button>
@@ -41,7 +57,7 @@ export default function AdminDashboard() {
         <Link href="/">
           <Button
             variant="outline"
-            className="border-sage-300 text-sage-700 hover:bg-sage-50 bg-transparent"
+            className="border-sage-300 text-sage-700 hover:bg-primary bg-transparent"
           >
             View Live Site
           </Button>
@@ -59,7 +75,7 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-serif text-sage-900">
-              {stats.totalPosts}
+              {summary.postCount}
             </div>
             <p className="text-xs text-sage-600 mt-1">Published insights</p>
           </CardContent>
@@ -74,7 +90,7 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-serif text-sage-900">
-              {stats.totalComments}
+              {summary.commentCounts}
             </div>
             <p className="text-xs text-sage-600 mt-1">Shared reflections</p>
           </CardContent>
@@ -89,7 +105,7 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-serif text-sage-900">
-              {stats.totalMessages}
+              {summary.messageCounts}
             </div>
             <p className="text-xs text-sage-600 mt-1">Seeking connection</p>
           </CardContent>
@@ -104,7 +120,7 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-serif text-sage-900">
-              {stats.recentPosts}
+              {summary.recentActivity}
             </div>
             <p className="text-xs text-sage-600 mt-1">This week</p>
           </CardContent>
@@ -123,28 +139,30 @@ export default function AdminDashboard() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {/* Mock recent posts */}
             <div className="space-y-3">
-              <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-sage-50/50 transition-colors">
-                <div className="w-12 h-12 rounded-lg bg-sage-100 flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-medium text-sage-900 text-sm truncate">
-                    The Art of Letting Go
-                  </h4>
-                  <p className="text-xs text-sage-600 mt-1">2 days ago</p>
+              {summary.recentPosts.map((post) => (
+                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-sage-50/50 transition-colors">
+                  {post.image && (
+                    <Image
+                      className="w-12 h-12 rounded-lg bg-sage-100 flex-shrink-0"
+                      src={post.image}
+                      height={48}
+                      width={48}
+                      alt={post.title}
+                    />
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-sage-900 text-sm truncate">
+                      {post.title}
+                    </h4>
+                    <p className="text-xs text-sage-600 mt-1">
+                      {ago(post.date)}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-sage-50/50 transition-colors">
-                <div className="w-12 h-12 rounded-lg bg-sage-100 flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-medium text-sage-900 text-sm truncate">
-                    Finding Peace in Uncertainty
-                  </h4>
-                  <p className="text-xs text-sage-600 mt-1">5 days ago</p>
-                </div>
-              </div>
+              ))}
             </div>
-            <Link href="/admin/posts">
+            <Link href="/admin-area/home/posts">
               <Button
                 variant="ghost"
                 className="w-full text-sage-700 hover:text-sage-900 hover:bg-sage-50"
@@ -167,28 +185,23 @@ export default function AdminDashboard() {
           <CardContent className="space-y-4">
             {/* Mock recent messages */}
             <div className="space-y-3">
-              <div className="p-3 rounded-lg hover:bg-sage-50/50 transition-colors">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-sage-900 text-sm">
-                    Sarah M.
-                  </h4>
-                  <span className="text-xs text-sage-600">1 hour ago</span>
+              {summary.recentMessages.map((message) => (
+                <div className="p-3 rounded-lg hover:bg-sage-50/50 transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-sage-900 text-sm">
+                      {message.name}
+                    </h4>
+                    <span className="text-xs text-sage-600">
+                      {ago(message.date)}
+                    </span>
+                  </div>
+                  <p className="text-xs text-sage-600 line-clamp-2">
+                    {message.details}
+                  </p>
                 </div>
-                <p className="text-xs text-sage-600 line-clamp-2">
-                  I've been struggling with anxiety and would love to talk...
-                </p>
-              </div>
-              <div className="p-3 rounded-lg hover:bg-sage-50/50 transition-colors">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-sage-900 text-sm">John D.</h4>
-                  <span className="text-xs text-sage-600">3 hours ago</span>
-                </div>
-                <p className="text-xs text-sage-600 line-clamp-2">
-                  Your reflections have been so helpful. I'd like to schedule...
-                </p>
-              </div>
+              ))}
             </div>
-            <Link href="/admin/contacts">
+            <Link href="/admin-area/home/contacts">
               <Button
                 variant="ghost"
                 className="w-full text-sage-700 hover:text-sage-900 hover:bg-sage-50"

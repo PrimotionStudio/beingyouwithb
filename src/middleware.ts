@@ -16,19 +16,19 @@ export async function middleware(req: NextRequest) {
     if (pathname.startsWith("/api")) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
   const { payload } = await jwtVerify(token, secret);
-  if (!payload || userSchema.parse(payload)) {
+  if (!payload || !userSchema.parse(payload)) {
     if (pathname.startsWith("/api")) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/api/:path*"],
+  matcher: ["/admin-area/home/:path*", "/api/:path*"],
 };

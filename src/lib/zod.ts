@@ -42,3 +42,13 @@ export const contactSchema = z.object({
   date: z.date(),
 });
 export type ContactType = z.infer<typeof contactSchema>;
+
+export const summarySchema = z.object({
+  postCount: z.number(),
+  commentCounts: z.number(),
+  messageCounts: z.number(),
+  recentPosts: z.array(postSchema.omit({ comments: true })),
+  recentMessages: z.array(contactSchema),
+  recentActivity: z.number(),
+});
+export type SummaryType = z.infer<typeof summarySchema>;

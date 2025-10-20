@@ -1,7 +1,11 @@
+"use client";
 import type React from "react";
 import { Playfair_Display, Inter } from "next/font/google";
 import Link from "next/link";
 import { Home, FileText, MessageSquare, Mail, LogOut } from "lucide-react";
+import { useUserStore } from "@/lib/userStore";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -18,6 +22,12 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const { user, loadUserFromCookie, logout } = useUserStore();
+
+  useEffect(() => {
+    if (!user) loadUserFromCookie();
+  }, [user, loadUserFromCookie]);
   return (
     <div
       className={`${playfair.variable} ${inter.variable} min-h-screen bg-gradient-to-br from-sage-50 via-cream to-sage-50/30`}
@@ -69,7 +79,13 @@ export default function AdminLayout({
               </Link>
             </nav>
 
-            <button className="flex items-center gap-2 text-sage-600 hover:text-sage-900 transition-colors">
+            <button
+              className="flex items-center gap-2 text-sage-600 hover:text-sage-900 transition-colors"
+              onClick={() => {
+                logout();
+                router.push("/");
+              }}
+            >
               <LogOut className="w-4 h-4" />
               <span className="text-sm hidden md:inline">Logout</span>
             </button>
