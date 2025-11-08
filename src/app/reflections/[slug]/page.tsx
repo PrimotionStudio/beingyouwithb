@@ -7,8 +7,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, Facebook, Twitter, Link2, Mail } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { notFound, useParams } from "next/navigation";
+import { PostType } from "@/lib/zod";
+import { toast } from "sonner";
+import { calculateReadingTime } from "@/lib/htmlUtils";
 
 const reflectionsData: Record<string, any> = {
   "learning-to-let-go": {
@@ -46,13 +49,28 @@ const reflectionsData: Record<string, any> = {
 export default function ReflectionDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
-  const reflection = reflectionsData[slug];
-
+  const [reflection, setReflection] = useState<PostType>();
+  const [isLoading, setIsLoading] = useState(true);
   const [showComments, setShowComments] = useState(false);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState<string[]>([]);
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  async function fetchPost(slug: string) {
+    try {
+      const response = await fetch(`/api/posts?slug=${slug}`);
+      const data = await response.json();
+      setReflection(data);
+    } catch (error) {
+      toast.error("Error fetching post");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  useEffect(() => {
+    fetchPost(slug);
+  }, []);
 
   if (!reflection) {
     return notFound();
@@ -104,9 +122,9 @@ export default function ReflectionDetailPage() {
           {/* Article Header */}
           <div className="max-w-4xl mx-auto mb-12">
             <div className="flex items-center gap-4 text-sm text-foreground/50 mb-6">
-              <time>{reflection.date}</time>
+              <time>{new Date(reflection.date).toLocaleDateString()}</time>
               <span>•</span>
-              <span>{reflection.readTime}</span>
+              <span>{calculateReadingTime(reflection.content)}</span>
             </div>
 
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-foreground mb-6 text-balance">

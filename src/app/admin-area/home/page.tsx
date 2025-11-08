@@ -140,8 +140,11 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-3">
-              {summary.recentPosts.map((post) => (
-                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-sage-50/50 transition-colors">
+              {summary.recentPosts.map((post, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-sage-50/50 transition-colors"
+                >
                   {post.image && (
                     <Image
                       className="w-12 h-12 rounded-lg bg-sage-100 flex-shrink-0"
@@ -185,8 +188,11 @@ export default function AdminDashboard() {
           <CardContent className="space-y-4">
             {/* Mock recent messages */}
             <div className="space-y-3">
-              {summary.recentMessages.map((message) => (
-                <div className="p-3 rounded-lg hover:bg-sage-50/50 transition-colors">
+              {summary.recentMessages.map((message, i) => (
+                <div
+                  key={i}
+                  className="p-3 rounded-lg hover:bg-sage-50/50 transition-colors"
+                >
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-medium text-sage-900 text-sm">
                       {message.name}

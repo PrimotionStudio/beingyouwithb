@@ -17,17 +17,22 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+    <div
+      className="min-h-screen bg-background flex items-center justify-center px-4"
+      style={{
+        backgroundImage:
+          "url('/calm-ripples-on-water-surface-symbolizing-disruption.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="max-w-2xl w-full text-center space-y-8 animate-in fade-in duration-700">
         {/* Peaceful illustration */}
-        <div className="relative w-full aspect-[4/3] max-w-md mx-auto mb-8">
-          <img
-            src="/calm-ripples-on-water-surface-symbolizing-disruption.jpg"
-            alt="Calm water with gentle ripples"
-            className="w-full h-full object-cover rounded-2xl opacity-80"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent rounded-2xl" />
-        </div>
+
+        <h1 className="font-serif text-5xl md:text-9xl text-white/90 animate-breathe">
+          Check Your Internet
+        </h1>
 
         {/* Gentle messaging */}
         <div className="space-y-4">

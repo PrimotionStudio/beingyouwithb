@@ -23,7 +23,7 @@ export const postSchema = z.object({
   title: z.string(),
   content: z.string(),
   date: z.date(),
-  comments: z.array(commentSchema),
+  comments: z.array(commentSchema).optional(),
 });
 export type PostType = z.infer<typeof postSchema>;
 

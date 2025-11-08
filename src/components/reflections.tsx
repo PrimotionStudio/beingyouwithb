@@ -1,33 +1,26 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-
-const reflections = [
-  {
-    slug: "learning-to-let-go",
-    quote:
-      "When the mind feels heavy, it's asking for stillness, not strength.",
-    content:
-      "We spend so much energy trying to control outcomes, manage perceptions, and hold everything together. But sometimes, the most powerful thing we can do is release our grip. Letting go isn't giving up—it's making space for something new to emerge. It's trusting that not everything needs to be figured out right now.\n\nWhen we hold on too tightly, we create tension—in our bodies, our minds, our relationships. We become rigid, afraid of what might happen if we loosen our grasp. But life isn't meant to be controlled; it's meant to be experienced.\n\nLetting go is a practice, not a one-time event. It's choosing, again and again, to trust the process. To believe that you are capable of handling whatever comes next. To know that releasing control doesn't mean losing yourself—it means finding yourself.",
-    image: "/peaceful-hands-releasing-flower-petals-into-water.jpg",
-  },
-  {
-    slug: "the-weight-we-carry",
-    quote: "Healing happens in seasons, not schedules.",
-    content:
-      "We all carry invisible burdens—unspoken fears, old wounds, expectations we never asked for. These weights become so familiar that we forget we're carrying them at all. Acknowledging what you carry is the first step toward setting it down. You don't have to carry it alone.\n\nSometimes the heaviest things we carry aren't physical at all. They're the stories we tell ourselves about who we should be, the pain we've never processed, the love we never received. These invisible weights shape how we move through the world.\n\nBut here's what I want you to know: You don't have to carry everything forever. You can set things down. You can ask for help. You can choose to lighten your load, one small release at a time.",
-    image: "/person-walking-on-peaceful-forest-path-with-soft-m.jpg",
-  },
-  {
-    slug: "when-words-feel-impossible",
-    quote: "Your feelings don't need to make sense to be valid.",
-    content:
-      "Sometimes we can't name what we're feeling, and that's okay. Not everything needs a label or an explanation. Emotions are complex, layered, and often contradictory. The goal isn't always to understand them perfectly—it's to allow them to exist without judgment.\n\nWe live in a world that demands clarity, explanations, and neat categories. But feelings don't work that way. They're messy. They overlap. They contradict each other. And that's completely normal.\n\nYou don't need to have all the words. You don't need to explain yourself perfectly. Sometimes, it's enough to simply say: 'I'm feeling something, and I'm not sure what it is yet.' That's valid. That's honest. That's enough.",
-  },
-];
+import { useEffect, useState } from "react";
+import { PostType } from "@/lib/zod";
+import { getExcerpt } from "@/lib/htmlUtils";
 
 export function Reflections() {
+  const [reflections, setReflections] = useState<PostType[]>([]);
+
+  async function fetchPosts() {
+    const response = await fetch("/api/posts");
+    const data = await response.json();
+    setReflections(data);
+  }
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   return (
     <section id="reflections" className="py-16 md:py-24 bg-secondary/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
@@ -62,7 +55,7 @@ export function Reflections() {
                   </blockquote>
 
                   <p className="text-foreground/70 leading-relaxed text-pretty line-clamp-3">
-                    {reflection.content}
+                    {getExcerpt(reflection.content, 150)}
                   </p>
                 </div>
               </article>
