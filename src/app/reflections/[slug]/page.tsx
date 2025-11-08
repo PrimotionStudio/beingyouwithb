@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { notFound, useParams } from "next/navigation";
 import { PostType } from "@/lib/zod";
 import { toast } from "sonner";
-import { calculateReadingTime } from "@/lib/htmlUtils";
+import { calculateReadingTime, sanitizeHtml } from "@/lib/htmlUtils";
 
 const reflectionsData: Record<string, any> = {
   "learning-to-let-go": {
@@ -69,9 +69,31 @@ export default function ReflectionDetailPage() {
     }
   }
   useEffect(() => {
-    fetchPost(slug);
-  }, []);
+    if (slug) fetchPost(slug);
+  }, [slug]);
 
+  if (isLoading) {
+    return (
+      <main className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-20">
+          <div className="max-w-4xl mx-auto">
+            <div className="animate-pulse space-y-8">
+              <div className="h-8 bg-secondary/30 rounded w-3/4"></div>
+              <div className="h-4 bg-secondary/30 rounded w-1/2"></div>
+              <div className="h-64 bg-secondary/30 rounded"></div>
+              <div className="space-y-4">
+                <div className="h-4 bg-secondary/30 rounded"></div>
+                <div className="h-4 bg-secondary/30 rounded"></div>
+                <div className="h-4 bg-secondary/30 rounded w-5/6"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </main>
+    );
+  }
   if (!reflection) {
     return notFound();
   }
@@ -84,7 +106,7 @@ export default function ReflectionDetailPage() {
   };
 
   const handleShare = async (platform: string) => {
-    if (typeof window === "undefined") return;
+    if (!reflection || typeof window === "undefined") return;
 
     const url = window.location.href;
     const text = `${reflection.title} - ${reflection.quote}`;
@@ -152,18 +174,264 @@ export default function ReflectionDetailPage() {
 
           {/* Article Content */}
           <div className="max-w-3xl mx-auto">
-            <div className="prose prose-lg max-w-none">
-              {reflection.content
-                .split("\n\n")
-                .map((paragraph: string, index: number) => (
-                  <p
-                    key={index}
-                    className="text-foreground/80 leading-relaxed mb-6 text-pretty"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-            </div>
+            <style
+              dangerouslySetInnerHTML={{
+                __html: `
+              /* Base article content container */
+              .article-content {
+                font-family: var(--font-serif), Georgia, serif;
+                color: #2c2c2c;
+                line-height: 1.8;
+                font-size: 17px;
+              }
+
+              .article-content h1 {
+                font-family: var(--font-serif), Georgia, serif;
+                font-size: 2.5rem;
+                font-weight: 600;
+                line-height: 1.2;
+                margin-top: 2.5em;
+                margin-bottom: 1em;
+                color: #1a1a1a;
+                letter-spacing: -0.02em;
+              }
+
+              .article-content h2 {
+                font-family: var(--font-serif), Georgia, serif;
+                font-size: 2rem;
+                font-weight: 600;
+                line-height: 1.3;
+                margin-top: 2em;
+                margin-bottom: 0.75em;
+                color: #1a1a1a;
+                letter-spacing: -0.01em;
+                border-bottom: 1px solid #e5e5e5;
+                padding-bottom: 0.3em;
+              }
+
+              .article-content h3 {
+                font-family: var(--font-serif), Georgia, serif;
+                font-size: 1.5rem;
+                font-weight: 600;
+                line-height: 1.4;
+                margin-top: 1.8em;
+                margin-bottom: 0.6em;
+                color: #2c2c2c;
+              }
+
+              .article-content h4 {
+                font-family: var(--font-serif), Georgia, serif;
+                font-size: 1.25rem;
+                font-weight: 600;
+                line-height: 1.5;
+                margin-top: 1.5em;
+                margin-bottom: 0.5em;
+                color: #2c2c2c;
+              }
+
+              .article-content h5 {
+                font-family: var(--font-serif), Georgia, serif;
+                font-size: 1.1rem;
+                font-weight: 600;
+                line-height: 1.5;
+                margin-top: 1.3em;
+                margin-bottom: 0.4em;
+                color: #3c3c3c;
+              }
+
+              .article-content h6 {
+                font-family: var(--font-serif), Georgia, serif;
+                font-size: 1rem;
+                font-weight: 600;
+                line-height: 1.5;
+                margin-top: 1.2em;
+                margin-bottom: 0.4em;
+                color: #4a4a4a;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+              }
+              /* Paragraphs */
+              .article-content p {
+                margin-bottom: 1.5em;
+                line-height: 1.8;
+              }
+
+              /* Bold text */
+              .article-content strong,
+              .article-content b {
+                font-weight: 700;
+                color: #1a1a1a;
+              }
+
+              /* Italic text */
+              .article-content em,
+              .article-content i {
+                font-style: italic;
+                color: #3c3c3c;
+              }
+
+              /* Blockquotes */
+              .article-content blockquote {
+                font-family: var(--font-serif), Georgia, serif;
+                font-size: 1.25rem;
+                font-style: italic;
+                line-height: 1.6;
+                border-left: 4px solid #a7c4a0;
+                padding: 1.5rem 2rem;
+                margin: 2.5em 0;
+                color: #4a4a4a;
+                background: linear-gradient(to right, #fdfbf7, transparent);
+                border-radius: 0 4px 4px 0;
+                position: relative;
+              }
+
+              .article-content blockquote::before {
+                content: '"';
+                font-size: 4rem;
+                line-height: 1;
+                color: #a7c4a0;
+                opacity: 0.3;
+                position: absolute;
+                top: 0;
+                left: 0.5rem;
+              }
+
+              /* Links */
+              .article-content a {
+                color: #a7c4a0;
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 2px;
+                transition: all 0.2s ease;
+              }
+
+              .article-content a:hover {
+                color: #8faf89;
+                text-decoration-thickness: 2px;
+              }
+
+              /* Lists */
+              .article-content ul,
+              .article-content ol {
+                margin: 1.5em 0;
+                padding-left: 2rem;
+              }
+
+              .article-content ul {
+                list-style-type: disc;
+              }
+
+              .article-content ol {
+                list-style-type: decimal;
+              }
+
+              .article-content li {
+                margin-bottom: 0.75em;
+                line-height: 1.7;
+                padding-left: 0.5rem;
+              }
+
+              .article-content ul ul,
+              .article-content ol ol,
+              .article-content ul ol,
+              .article-content ol ul {
+                margin: 0.5em 0;
+              }
+
+              .article-content li > ul,
+              .article-content li > ol {
+                margin-top: 0.5em;
+              }
+
+              /* Nested lists */
+              .article-content ul ul {
+                list-style-type: circle;
+              }
+
+              .article-content ul ul ul {
+                list-style-type: square;
+              }
+
+              /* Line breaks */
+              .article-content br {
+                display: block;
+                content: "";
+                margin-top: 0.5em;
+              }
+
+              /* Code (if you add it later) */
+              .article-content code {
+                font-family: "Courier New", monospace;
+                background: #f5f5f5;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 0.9em;
+              }
+
+              .article-content pre {
+                background: #f5f5f5;
+                padding: 1.5em;
+                border-radius: 8px;
+                overflow-x: auto;
+                margin: 2em 0;
+              }
+
+              .article-content pre code {
+                background: none;
+                padding: 0;
+              }
+
+              /* Horizontal rule */
+              .article-content hr {
+                border: none;
+                border-top: 1px solid #e5e5e5;
+                margin: 3em 0;
+              }
+
+              /* Responsive adjustments */
+              @media (max-width: 768px) {
+                .article-content {
+                  font-size: 16px;
+                }
+
+                .article-content h1 {
+                  font-size: 2rem;
+                }
+
+                .article-content h2 {
+                  font-size: 1.75rem;
+                }
+
+                .article-content h3 {
+                  font-size: 1.5rem;
+                }
+
+                .article-content h4 {
+                  font-size: 1.25rem;
+                }
+
+                .article-content h5 {
+                  font-size: 1.1rem;
+                }
+
+                .article-content h6 {
+                  font-size: 1rem;
+                }
+
+                .article-content blockquote {
+                  font-size: 1.1rem;
+                  padding: 1rem 1.5rem;
+                }
+              }
+            `,
+              }}
+            />
+            <div
+              className="article-content prose prose-lg prose-sage max-w-none font-serif"
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(reflection.content),
+              }}
+            />
 
             {/* Subtle CTA */}
             <div className="mt-16 p-8 md:p-12 bg-secondary/30 rounded-2xl border border-border/50">
@@ -186,7 +454,6 @@ export default function ReflectionDetailPage() {
                 </Button>
               </Link>
             </div>
-
             {/* Share Section */}
             <div className="mt-12 pt-8 border-t border-border/50">
               <div className="flex items-center justify-between">
@@ -229,7 +496,6 @@ export default function ReflectionDetailPage() {
                 </div>
               </div>
             </div>
-
             {/* Subtle Comments Section */}
             <div className="mt-16">
               {!showComments ? (

@@ -529,57 +529,260 @@ export default function EditPostPage() {
           font-style: italic !important;
         }
 
-        /* Editor content styling */
+        /* Medium Editor Content Styling - Matches Article Display */
+
+        /* Base contenteditable styles */
+        [contenteditable="true"] {
+          font-family: var(--font-serif), Georgia, serif;
+          color: #2c2c2c;
+          line-height: 1.8;
+          font-size: 17px;
+        }
+
+        /* Heading 1 */
+        [contenteditable="true"] h1 {
+          font-family: var(--font-serif), Georgia, serif;
+          font-size: 2.5rem;
+          font-weight: 600;
+          line-height: 1.2;
+          margin-top: 2.5em;
+          margin-bottom: 1em;
+          color: #1a1a1a;
+          letter-spacing: -0.02em;
+        }
+
+        /* Heading 2 */
         [contenteditable="true"] h2 {
-          font-family: var(--font-serif);
-          font-size: 24px;
-          font-weight: 500;
+          font-family: var(--font-serif), Georgia, serif;
+          font-size: 2rem;
+          font-weight: 600;
+          line-height: 1.3;
           margin-top: 2em;
           margin-bottom: 0.75em;
+          color: #1a1a1a;
+          letter-spacing: -0.01em;
+          border-bottom: 1px solid #e5e5e5;
+          padding-bottom: 0.3em;
+        }
+
+        /* Heading 3 */
+        [contenteditable="true"] h3 {
+          font-family: var(--font-serif), Georgia, serif;
+          font-size: 1.5rem;
+          font-weight: 600;
+          line-height: 1.4;
+          margin-top: 1.8em;
+          margin-bottom: 0.6em;
           color: #2c2c2c;
         }
 
-        [contenteditable="true"] h3 {
-          font-family: var(--font-serif);
-          font-size: 20px;
+        /* Heading 4 */
+        [contenteditable="true"] h4 {
+          font-family: var(--font-serif), Georgia, serif;
+          font-size: 1.25rem;
+          font-weight: 600;
+          line-height: 1.5;
           margin-top: 1.5em;
           margin-bottom: 0.5em;
           color: #2c2c2c;
         }
 
-        [contenteditable="true"] blockquote {
-          font-family: var(--font-serif);
-          font-size: 18px;
-          font-style: italic;
-          border-left: 3px solid #a7c4a0;
-          padding-left: 24px;
-          margin: 2em 0;
-          color: #4a4a4a;
-          background: #fdfbf7;
-          padding: 16px 24px;
-          border-radius: 4px;
+        /* Heading 5 */
+        [contenteditable="true"] h5 {
+          font-family: var(--font-serif), Georgia, serif;
+          font-size: 1.1rem;
+          font-weight: 600;
+          line-height: 1.5;
+          margin-top: 1.3em;
+          margin-bottom: 0.4em;
+          color: #3c3c3c;
         }
 
+        /* Heading 6 */
+        [contenteditable="true"] h6 {
+          font-family: var(--font-serif), Georgia, serif;
+          font-size: 1rem;
+          font-weight: 600;
+          line-height: 1.5;
+          margin-top: 1.2em;
+          margin-bottom: 0.4em;
+          color: #4a4a4a;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        /* Paragraphs */
+        [contenteditable="true"] p {
+          margin-bottom: 1.5em;
+          line-height: 1.8;
+        }
+
+        /* Bold text */
+        [contenteditable="true"] strong,
+        [contenteditable="true"] b {
+          font-weight: 700;
+          color: #1a1a1a;
+        }
+
+        /* Italic text */
+        [contenteditable="true"] em,
+        [contenteditable="true"] i {
+          font-style: italic;
+          color: #3c3c3c;
+        }
+
+        /* Blockquotes */
+        [contenteditable="true"] blockquote {
+          font-family: var(--font-serif), Georgia, serif;
+          font-size: 1.25rem;
+          font-style: italic;
+          line-height: 1.6;
+          border-left: 4px solid #a7c4a0;
+          padding: 1.5rem 2rem;
+          margin: 2.5em 0;
+          color: #4a4a4a;
+          background: linear-gradient(to right, #fdfbf7, transparent);
+          border-radius: 0 4px 4px 0;
+          position: relative;
+        }
+
+        [contenteditable="true"] blockquote::before {
+          content: '"';
+          font-size: 4rem;
+          line-height: 1;
+          color: #a7c4a0;
+          opacity: 0.3;
+          position: absolute;
+          top: 0;
+          left: 0.5rem;
+        }
+
+        /* Links */
         [contenteditable="true"] a {
           color: #a7c4a0;
           text-decoration: underline;
+          text-decoration-thickness: 1px;
+          text-underline-offset: 2px;
+          transition: all 0.2s ease;
         }
 
         [contenteditable="true"] a:hover {
           color: #8faf89;
+          text-decoration-thickness: 2px;
+        }
+
+        /* Lists */
+        [contenteditable="true"] ul,
+        [contenteditable="true"] ol {
+          margin: 1.5em 0;
+          padding-left: 2rem;
         }
 
         [contenteditable="true"] ul {
-          margin: 1.5em 0;
-          padding-left: 28px;
+          list-style-type: disc;
+        }
+
+        [contenteditable="true"] ol {
+          list-style-type: decimal;
         }
 
         [contenteditable="true"] li {
-          margin-bottom: 0.5em;
+          margin-bottom: 0.75em;
+          line-height: 1.7;
+          padding-left: 0.5rem;
         }
 
-        [contenteditable="true"] p {
-          margin-bottom: 1.5em;
+        [contenteditable="true"] ul ul,
+        [contenteditable="true"] ol ol,
+        [contenteditable="true"] ul ol,
+        [contenteditable="true"] ol ul {
+          margin: 0.5em 0;
+        }
+
+        [contenteditable="true"] li > ul,
+        [contenteditable="true"] li > ol {
+          margin-top: 0.5em;
+        }
+
+        /* Nested lists */
+        [contenteditable="true"] ul ul {
+          list-style-type: circle;
+        }
+
+        [contenteditable="true"] ul ul ul {
+          list-style-type: square;
+        }
+
+        /* Line breaks */
+        [contenteditable="true"] br {
+          display: block;
+          content: "";
+          margin-top: 0.5em;
+        }
+
+        /* Code (if you add it later) */
+        [contenteditable="true"] code {
+          font-family: "Courier New", monospace;
+          background: #f5f5f5;
+          padding: 0.2em 0.4em;
+          border-radius: 3px;
+          font-size: 0.9em;
+        }
+
+        [contenteditable="true"] pre {
+          background: #f5f5f5;
+          padding: 1.5em;
+          border-radius: 8px;
+          overflow-x: auto;
+          margin: 2em 0;
+        }
+
+        [contenteditable="true"] pre code {
+          background: none;
+          padding: 0;
+        }
+
+        /* Horizontal rule */
+        [contenteditable="true"] hr {
+          border: none;
+          border-top: 1px solid #e5e5e5;
+          margin: 3em 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          [contenteditable="true"] {
+            font-size: 16px;
+          }
+
+          [contenteditable="true"] h1 {
+            font-size: 2rem;
+          }
+
+          [contenteditable="true"] h2 {
+            font-size: 1.75rem;
+          }
+
+          [contenteditable="true"] h3 {
+            font-size: 1.5rem;
+          }
+
+          [contenteditable="true"] h4 {
+            font-size: 1.25rem;
+          }
+
+          [contenteditable="true"] h5 {
+            font-size: 1.1rem;
+          }
+
+          [contenteditable="true"] h6 {
+            font-size: 1rem;
+          }
+
+          [contenteditable="true"] blockquote {
+            font-size: 1.1rem;
+            padding: 1rem 1.5rem;
+          }
         }
       `}</style>
     </div>

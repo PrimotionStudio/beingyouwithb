@@ -33,8 +33,8 @@ export default function PostsPage() {
             Manage your reflections and wisdom
           </p>
         </div>
-        <Link href="/admin/posts/new">
-          <Button className="bg-sage-600 hover:bg-sage-700 text-white gap-2">
+        <Link href="/admin-area/home/posts/new">
+          <Button className="gap-2">
             <Plus className="w-4 h-4" />
             New Reflection
           </Button>
